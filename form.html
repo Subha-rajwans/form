@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<head>
+    <title>sign up form</title>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+
+    <script>
+        var stateObject = {
+            "India": {
+                "Delhi": ["new Delhi", "North Delhi"],
+                "Kerala": ["Thiruvananthapuram", "Palakkad"],
+                "Goa": ["North Goa", "South Goa"],
+            },
+            "Australia": {
+                "South Australia": ["Dunstan", "Mitchell"],
+                "Victoria": ["Altona", "Euroa"]
+            },
+            "Canada": {
+                "Alberta": ["Acadia", "Bighorn"],
+                "Columbia": ["Washington", ""]
+            },
+        }
+        window.onload = function() {
+            var countySel = document.getElementById("countySel"),
+                stateSel = document.getElementById("stateSel"),
+                districtSel = document.getElementById("districtSel");
+            for (var country in stateObject) {
+                countySel.options[countySel.options.length] = new Option(country, country);
+            }
+            countySel.onchange = function() {
+                stateSel.length = 1; // remove all options bar first
+                districtSel.length = 1; // remove all options bar first
+                if (this.selectedIndex < 1) return; // done 
+                for (var state in stateObject[this.value]) {
+                    stateSel.options[stateSel.options.length] = new Option(state, state);
+                }
+            }
+            countySel.onchange(); // reset in case page is reloaded
+            stateSel.onchange = function() {
+                districtSel.length = 1; // remove all options bar first
+                if (this.selectedIndex < 1) return; // done 
+                var district = stateObject[countySel.value][this.value];
+                for (var i = 0; i < district.length; i++) {
+                    districtSel.options[districtSel.options.length] = new Option(district[i], district[i]);
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div style="position:fixed; padding: 2.5%;">
+        <div class="signup__container">
+            <div class="container__child signup__thumbnail">
+
+                <div class="signup__overlay"></div>
+            </div>
+            <div class="container__child signup__form">
+                <form action="#">
+                    <div class="form-group">
+                        <label for="username">First Name</label>
+                        <input class="form-control" type="text" name="username" id="username" placeholder="username" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Last Name</label>
+                        <input class="form-control" type="text" name="username" id="username" placeholder="username" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" onclick="ValidateEmail(mail)" placeholder="abc@gmail.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Age</label>
+                        <input class="form-control" id="age1" placeholder="age" required />
+                    </div>
+
+
+                    <form name="myform" id="myForm">
+                        Select Country: <select name="state" id="countySel" size="1">
+                    <option value="" selected="selected">Select Country</option>
+                    </select>
+                        <br>
+                        <br> Select State: <select name="countrya" id="stateSel" size="1">
+                    <option value="" selected="selected">Please select Country first</option>
+                    </select>
+                        <br>
+                        <br> Select District: <select name="district" id="districtSel" size="1">
+                    <option value="" selected="selected">Please select State first</option>
+                    </select>
+                    </form>
+                    <closeform></closeform>
+
+                    <div class="m-t-lg">
+
+                        <input class="btn btn--form" type="submit" onclick="myFunction()" value="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function myFunction() {
+            var x, text;
+
+            // Get the value of the input field with id="numb"
+            x = document.getElementById("age1").value;
+
+            // If x is Not a Number or less than one or greater than 10
+            if (isNaN(x) || x < 14 || x > 16) {
+                text = "The age must be a number between 14 and 16";
+            }
+            alert(
+                text
+            )
+        }
+
+        function ValidateEmail(mail) {
+            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(myForm.emailAddr.value)) {
+                return (true)
+            }
+            alert("You have entered an invalid email address!")
+            return (false)
+    </script>
+
+</body>
+
+</html>
